@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+// to apply Game component on inside of render
 import Game from "./Game.js";
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
