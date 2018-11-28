@@ -102,20 +102,45 @@ class Game extends Component {
   }
 
   //Add setState to handle state which defined above
+  //renderしたDOMの中のClickeventですでに関数の実行が定義されているのでこの書き方が可能
   runGame = () => {
+    //when runGame has been turned on, setState change to true
     this.setState({isRunning: true});
+    this.runIteration();
   }
 
   stopGame = () => {
+    //when stopGame has been turned on, setState change to false
     this.setState({isRunning: false});
+    if(this.timeoutHandler){
+      window.clearTimeout(this.timeoutHandler);
+      this.timeoutHandler = null;
+    } 
   }
 
   handleIntervalChange = (event) => {
     this.setState({interval: event.target.value});
   }
 
+  //to define iteration to iterate while game is running
+  //関数の定義から入る
+  runIteration(){
+    console.log('running iteration');
+    let newBoard = this.makeEmptyBoard();
+
+    // Add logic for each iteration here
+    this.board = newBoard;
+    // (↓check: can we write inside method which has been already defined like this? - setStateって関数実行したタイミング以外でも書けるの？)
+    this.setState({cells : this.makeCells()});
+
+    this.timeoutHandler = window.setTimeout(() => {
+      this.runIteration();
+    }, this.state.interval);
+  }
+
+
   render(){
-    const { cells, isRunning } = this.state;
+    const { cells, interval, isRunning } = this.state;
     return(
       <div>
         <h1 className="Title">(-.-)...zzZ</h1>
@@ -139,9 +164,9 @@ class Game extends Component {
             {
               isRunning 
               ? 
-              <button className="button" onclick={this.stopGame}>Stop</button>
+              <button className="button" onClick={this.stopGame}>Stop</button>
                : 
-              <button className="button" onclick={this.runGame}>Run</button>
+              <button className="button" onClick={this.runGame}>Run</button>
             }
         </div>
       </div>
