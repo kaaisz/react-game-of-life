@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import './Game.scss';
 
-const CELL_SIZE = 20;
-const WIDTH = 800;
-const HEIGHT = 600;
+const CELL_SIZE = 10;
+const WIDTH = 700;
+const HEIGHT = 500;
 
 class Cell extends Component {
   render() {
@@ -20,6 +20,13 @@ class Cell extends Component {
 }
 
 class Game extends Component {
+
+  //Add initial game controller by using state
+  state = {
+    cells: [],
+    interval: 100,
+    isRunning: false,
+  }
 
   //to calculate position of the board element
   getElementOffset(){
@@ -94,8 +101,21 @@ class Game extends Component {
     return cells;
   }
 
+  //Add setState to handle state which defined above
+  runGame = () => {
+    this.setState({isRunning: true});
+  }
+
+  stopGame = () => {
+    this.setState({isRunning: false});
+  }
+
+  handleIntervalChange = (event) => {
+    this.setState({interval: event.target.value});
+  }
+
   render(){
-    const { cells } = this.state;
+    const { cells, isRunning } = this.state;
     return(
       <div>
         <h1 className="Title">(-.-)...zzZ</h1>
@@ -110,6 +130,19 @@ class Game extends Component {
             <Cell x={cell.x} y={cell.y} key={`${cell.x}, ${cell.y}`}/>
           ))}
 
+        </div>
+        {/* Add controller */}
+        <div className="controls">
+          {/* input to add type */}
+          Update every <input value={this.state.interval}onChange={this.handleIntervalChange} /> msec 
+            {/* Button */}
+            {
+              isRunning 
+              ? 
+              <button className="button" onclick={this.stopGame}>Stop</button>
+               : 
+              <button className="button" onclick={this.runGame}>Run</button>
+            }
         </div>
       </div>
     );
