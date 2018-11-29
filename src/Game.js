@@ -177,13 +177,11 @@ class Game extends Component {
     return neighbors;
   }
 
-
-
   render(){
     const { cells, interval, isRunning } = this.state;
     return(
       <div>
-        <h1 className="Title">{`(-.-)...zzZ { GAME OF LIFE )`}</h1>
+        <h1 className="Title">{`(-.-)...zzZ`}<span className="title-blink">{`{ GAME OF LIFE )`}</span></h1>
         <div className="Board" style={{width: WIDTH, height: HEIGHT, 
           backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`}} 
           // Add eventHandler
