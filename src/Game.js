@@ -183,7 +183,7 @@ class Game extends Component {
     const { cells, interval, isRunning } = this.state;
     return(
       <div>
-        <h1 className="Title">(-.-)...zzZ</h1>
+        <h1 className="Title">{`(-.-)...zzZ { GAME OF LIFE )`}</h1>
         <div className="Board" style={{width: WIDTH, height: HEIGHT, 
           backgroundSize: `${CELL_SIZE}px ${CELL_SIZE}px`}} 
           // Add eventHandler
